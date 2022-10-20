@@ -38,6 +38,10 @@ const range = form['length'];
 
 const copyBtn = document.querySelector('.copy');
 
+const API = 'https://famous-quotes4.p.rapidapi.com/random?category=all&count=1';
+
+let words = [];
+
 let len = range.value;
 
 passSpan.innerText = len;
@@ -46,11 +50,12 @@ function getRandomNumber (min, max) {
   return Math.floor(Math.random() * (max - min + 1))
 }
 
-function generatePass(passLen, options) {
+function generatePass(passLen, options, words = false) {
   let strongPass = [];
 
   let  arrOfArrs;
 
+  /*Si el array esta vacio crea una contrase;a con todas la opciones x desfecto*/
   if (options.length == 0){
     arrOfArrs = [letters, numbers, symbols];
   } else {
@@ -65,12 +70,18 @@ function generatePass(passLen, options) {
     /*Agrega el caracter a un array en cada iteracion*/
     strongPass.push(randomChar);
   }
-  strongPass = strongPass.join("");
 
+  /*Comprueba si la opcion de palabras esta activa y las une con un guion -*/ 
+  if (words == true) {
+    strongPass = strongPass.join("-");
+    console.log(strongPass.split("-").length)
+  }else{
+    strongPass = strongPass.join("");
+  }
   form['pass'].value = strongPass;
 }
 
-range.addEventListener('click', (e) => {
+range.addEventListener('change', (e) => {
   e.preventDefault();
   len = range.value;
   passSpan.innerText = len;
@@ -84,22 +95,34 @@ form.addEventListener('submit', (e) => {
   let checks = {
     letters: form['letters'].checked,
     numbers: form['numbers'].checked,
-    chars: form['chars'].checked
+    chars: form['chars'].checked,
+    words: form['words'].checked,
   };
   
   for(let check in checks) {
     if(checks[check] == true){
-      if (check == 'letters'){
-        options.push(letters);
-      } else if (check == 'numbers') {
-        options.push(numbers);
+      if (check == 'words'){
+       options = [];
+       form['letters'].checked = false,
+       form['numbers'].checked = false,
+       form['chars'].checked = false,
+        options.push(words)
       } else {
-        options.push(symbols);
+        if (check == 'letters'){
+          options.push(letters);
+        } else if (check == 'numbers') {
+          options.push(numbers);
+        } else {
+          options.push(symbols);
+        }
       }
     }
   }
-  
-  generatePass(len, options);
+  if (checks['words'] == true) {
+    generatePass(len, options, true);
+  }else {
+    generatePass(len, options);
+  }
 });
 
 copyBtn.addEventListener('click', (e) => {
@@ -109,8 +132,29 @@ copyBtn.addEventListener('click', (e) => {
 function copyToClipboard (target) {
   const element = document.querySelector(target);
   const value = element.value;
-
   window.navigator.clipboard.writeText((value));
-  alert("copied:" + value);
+  alert('Password copied to clipboard!');
   location.reload();
 }
+
+function fetchData(API) {
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '707879c69fmsh4c832878d0c9862p1a808djsn1967a349a7fa',
+      'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com'
+    }
+  };
+
+  fetch(API,options)
+    .then((response) => response.json())
+    .then((data) => {
+      words = (data[0].text).split(" ").sort();
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  
+}
+
+fetchData(API);
