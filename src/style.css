@@ -1,6 +1,7 @@
 :root {
     --white: #EEEEEE;
     --blue: #00ADB5;
+    --dark-blue: #02868d;
     --gray: #393E46;
     --dark-gray: #222831;
     --sm: 2.4rem;
@@ -17,7 +18,7 @@ html {
     font-size: 62.5%;
     font-family: 'Roboto Mono', monospace;
 }
-
+/*Main*/
 main {
     display: grid;
     place-content: center;
@@ -27,36 +28,59 @@ main {
     font-weight: 400;
     background-color: var(--white);
 }
-h1 {
+/*Title*/
+.title {
     text-align: center;
     margin-bottom: 2rem;
     color: var(--dark-gray);
     font-size: var(--md);
 }
-form {
+/*Form*/
+.form-container {
     width: 100%;
     height: auto;
-    padding: 2rem 4rem;
+    padding: 3rem 4rem;
     border-radius: 1rem;
     color: var(--white);
     background-color: var(--dark-gray);
 }
-form .pass {
+.form-container label {
+    margin-bottom: 1.5rem;
+}
+.form-container input[type=range] {
     width: 100%;
+}
+.pass-len {
+    padding: 0rem 1rem;
+    border-radius: 0.3rem;
+    background-color: var(--gray);
+}
+/*Input pass*/
+.pass {
+    width: 86%;
     padding: 1rem 2rem;
+    margin-bottom: 1.5rem;
     border:none;
     border-radius: 0.5rem;
     font-family: 'Roboto Mono', monospace;
     font-size: var(--sm);
     color: var(--dark-gray);
 }
-form input {
-    margin-bottom: 1.5rem;
+/*Copy button*/
+.copy {
+    width: 10%;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 1rem 0.5rem;
+    color: var(--white);
+    background-color: var(--blue);
 }
-form button {
+/*Generate button*/
+.generate-button {
     cursor: pointer;
     width: 100%;
-    margin: 2rem 0;
+    margin-top: 2rem;
     padding: 1rem 2rem;
     font-family: 'Roboto Mono', monospace;
     font-size: var(--sm);
@@ -65,4 +89,7 @@ form button {
     border-radius: 0.5rem;
     color: var(--white);
     background-color: var(--blue);
+}
+.generate-button:hover {
+    background-color: var(--dark-blue);
 }
