@@ -132,6 +132,7 @@ copyBtn.addEventListener('click', (e) => {
 function copyToClipboard (target) {
   const element = document.querySelector(target);
   const value = element.value;
+  element.select();
   window.navigator.clipboard.writeText((value));
   alert('Password copied to clipboard!');
   location.reload();
