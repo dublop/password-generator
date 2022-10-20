@@ -1,4 +1,4 @@
-# PlatziChallenge: Crea tu portafolio como javaScript developer
+# Password Generator
 
 ## Table of contents
 
