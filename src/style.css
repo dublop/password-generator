@@ -57,7 +57,7 @@ main {
 }
 /*Input pass*/
 .pass {
-    width: 86%;
+    width: 80%;
     padding: 1rem 2rem;
     margin-bottom: 1.5rem;
     cursor: not-allowed;
